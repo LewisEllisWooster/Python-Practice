@@ -1,0 +1,19 @@
+#uses arcpy library for ArcGIS. Splits Excel spreadsheets into geodatabase tables per excel sheet
+
+
+import os
+import xlrd
+import arcpy
+excelfile="STRING" #Spreadsheet location
+outtable="STRING" #out table location
+workbook = xlrd.open_workbook(excelfile)
+sheets = [sheet.name for sheet in workbook.sheets()]
+env.overwriteOutput = True
+
+
+for sheet in sheets:
+	print sheet
+	arcpy.ExcelToTable_conversion(Input_Excel_File=excelfile, Output_Table=outtable+sheet, Sheet=sheet)
+	print sheet +" moved"
+
+arcpy.ExcelToTable_conversion(Input_Excel_File=excelfile, Output_Table=outtable+"_"+sheet, Sheet=sheet)
